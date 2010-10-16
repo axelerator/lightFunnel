@@ -17,7 +17,7 @@ instance Surface Sphere where
 					if ( l2hc < 0 ) then
 						Nothing
 					else 
-						Just $ (originR ray) + ((directionR ray) *** (tca - sqrt(l2hc)))
+						Just $ onRay ray (tca - sqrt(l2hc))
 		where
 			oc = spherePos - (originR ray)
 			l2oc = len'2 oc
@@ -27,13 +27,10 @@ instance Surface Sphere where
 	normalAt (Sphere spherePos _) pos = pos - spherePos 
 
 findRayExit :: Sphere -> Ray -> Scalar -> Position
-findRayExit s@(Sphere spherePos radius) ray l2oc = (originR ray) + ((directionR ray) *** (tca - sqrt(l2hc)))
+findRayExit s@(Sphere spherePos radius) ray l2oc = onRay ray (tca - sqrt(l2hc))
 	where
 		oc = spherePos - (originR ray)
 		rayDir2 = len'2 $ directionR ray
 		tca = (oc *. (directionR ray)) / rayDir2
 		l2hc = ((radius * radius) - l2oc) / rayDir2 + (tca^2)
-
---mkIntersection :: ( Surface a, Material b) => Ray -> Scalar -> Object a b -> Intersection a b
---mkIntersection ray t geo = Intersection ( ((directionR ray) *** t ) + ( originR ray)   ) ray geo
 

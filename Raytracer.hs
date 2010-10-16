@@ -11,14 +11,11 @@ import Scene
 import Phong
 import Sphere
 
-
-
 samplePlane :: Plane -> (Integer, Integer) -> [Position]
 samplePlane plane (w, h) = [ (pOrigin plane) + (lu *** (fromInteger x)) + (lv *** (fromInteger y)) | y <- [0 .. h-1 ], x <- [0 .. w-1]  ]
 	where 
 		lu = (pU plane) %% (fromInteger w)
 		lv = (pV plane) %% (fromInteger h)
-
 
 chunk :: Int -> [a] -> [[a]]
 chunk i [] = []
@@ -55,7 +52,6 @@ raySceneIntersections gs r = 	if (null allIntersects) then
 															else
 																Just $ minimumBy minFunc allIntersects
 	where
-		--allIntersects = catMaybes $ map (\g -> Intersection g r) gs
 		allIntersects = catMaybes $ map (intersectWithObject r) gs
 		minFunc p1 p2 = if ((len'2 (orig - (position p1))) < (len'2 (orig - (position p2)))) then
 											LT

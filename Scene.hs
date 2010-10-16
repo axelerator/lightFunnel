@@ -1,5 +1,4 @@
 module Scene where
-
 import Vec3
 import Geometry
 
@@ -8,7 +7,6 @@ class Surface a where
 	normalAt :: a -> Position -> Direction 
 
 class Material a where
---	shade :: (Surface b) =>  Intersection b a -> Light -> Intensity
 	shade :: a -> Position -> Normal -> Ray -> Light -> Intensity
 
 data Color = Color Float Float Float
@@ -28,7 +26,6 @@ data (Surface a, Material b) => Object a b = Object {
 }	deriving (Eq, Show)
 
 type Intensity = Vec3
-
 
 data (Surface a, Material b) => Intersection a b = Intersection {
 	position :: Position,
